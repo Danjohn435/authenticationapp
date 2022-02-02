@@ -21,6 +21,7 @@ class LoginFragment : Fragment() {
     companion object {
         fun newInstance() = LoginFragment()
     }
+
     lateinit var email: TextInputEditText
     lateinit var password: TextInputEditText
     lateinit var button: Button
@@ -37,9 +38,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         email = view.findViewById(R.id.email)
-        password =view.findViewById(R.id.password)
+        password = view.findViewById(R.id.password)
         button = view.findViewById(R.id.login_button)
-        registerButton=view.findViewById(R.id.register_button)
+        registerButton = view.findViewById(R.id.register_button)
 
         email.doOnTextChanged { text, start, before, count ->
             viewModel.handleEmailChanged(text.toString())
@@ -54,12 +55,24 @@ class LoginFragment : Fragment() {
         }
         registerButton.setOnClickListener {
             viewModel.handleRegisterButtonClick()
-            requireActivity().supportFragmentManager.beginTransaction().add(R.id.container, RegisterFragment.newInstance(),"register")
-                .addToBackStack("register")
-                .commit()
+
         }
+        viewModel.email.observe(viewLifecycleOwner,{
+
+        })
+        viewModel.shouldShowRegisterScreen.observe(viewLifecycleOwner,{
+            if (it){
+                showRegisterScreen()
+            }
+        })
     }
 
-
+    fun showRegisterScreen() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.container, RegisterFragment.newInstance(), tag1)
+            .addToBackStack("register")
+            .commit()
+    }
+    val tag1="register"
 
 }

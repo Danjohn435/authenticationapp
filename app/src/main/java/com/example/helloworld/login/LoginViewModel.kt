@@ -1,19 +1,27 @@
 package com.example.helloworld.login
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {
-    fun handleEmailChanged(email: String) {
 
+    val email = MutableLiveData("")
+    val password: MutableLiveData<String> = MutableLiveData(String())
+    val shouldShowRegisterScreen = MutableLiveData(false)
+
+    fun handleEmailChanged(e: String) {
+        email.postValue(e)
     }
 
-    fun handlePasswordChanged(password: String) {
+    fun handlePasswordChanged(p: String) {
+        password.postValue(p)
     }
 
     fun handleLoginButtonClick() {
     }
 
     fun handleRegisterButtonClick() {
+        shouldShowRegisterScreen.postValue(true)
 
     }
     // TODO: Implement the ViewModel
