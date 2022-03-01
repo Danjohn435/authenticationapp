@@ -2,9 +2,13 @@ package com.example.helloworld.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.helloworld.AuthService
+import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
+    val service = AuthService.AuthServiceCreator.newService()
     val email = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData(String())
     val shouldShowRegisterScreen = MutableLiveData(false)
@@ -18,6 +22,12 @@ class LoginViewModel : ViewModel() {
     }
 
     fun handleLoginButtonClick() {
+        viewModelScope.launch {
+            val response = service.login(email.value!!, password.value!!)
+            if (response.isSuccessful) {
+
+            }
+        }
     }
 
     fun handleRegisterButtonClick() {
