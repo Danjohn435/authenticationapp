@@ -12,6 +12,7 @@ class LoginViewModel : ViewModel() {
     val email = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData(String())
     val shouldShowRegisterScreen = MutableLiveData(false)
+    val shouldShowHomeScreen = MutableLiveData(false)
 
     fun handleEmailChanged(e: String) {
         email.postValue(e)
@@ -25,6 +26,7 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             val response = service.login(email.value!!, password.value!!)
             if (response.isSuccessful) {
+                shouldShowHomeScreen.postValue(true)
 
             }
         }
