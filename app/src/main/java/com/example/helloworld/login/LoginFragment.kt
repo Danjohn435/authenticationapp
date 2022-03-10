@@ -1,5 +1,6 @@
 package com.example.helloworld.login
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import com.example.helloworld.R
 import com.example.helloworld.VMFactory
+import com.example.helloworld.home.HomeActivity
 import com.example.helloworld.register.RegisterFragment
 import com.google.android.material.textfield.TextInputEditText
 
@@ -65,6 +67,12 @@ class LoginFragment : Fragment() {
                 showRegisterScreen()
             }
         })
+        viewModel.shouldShowHomeScreen.observe(viewLifecycleOwner){
+            if (it){
+                showHomeScreen()
+            }
+
+        }
     }
 
     fun showRegisterScreen() {
@@ -74,5 +82,9 @@ class LoginFragment : Fragment() {
             .commit()
     }
     val tag1="register"
+    fun showHomeScreen() {
+        val intent = Intent(requireActivity(),HomeActivity::class.java)
+        startActivity(intent)
+    }
 
 }
